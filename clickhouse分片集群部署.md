@@ -31,6 +31,7 @@ services:
     ports:
       - "9001:9000"
       - "8123:8123"
+      - "9009:9009"
     volumes:
       - ./configs/shard1-replica1/config.xml:/etc/clickhouse-server/config.xml
       - ./configs/shard1-replica1/users.xml:/etc/clickhouse-server/users.xml
@@ -40,6 +41,7 @@ services:
       - clickhouse-net
     depends_on:
       - zookeeper
+    command: /bin/bash -c "chown -R root:root /var/lib/clickhouse && /entrypoint.sh"
 
   clickhouse-shard1-replica2:
     image: clickhouse/clickhouse-server
@@ -47,6 +49,7 @@ services:
     ports:
       - "9002:9000"
       - "8124:8123"
+      - "9010:9009"
     volumes:
       - ./configs/shard1-replica2/config.xml:/etc/clickhouse-server/config.xml
       - ./configs/shard1-replica2/users.xml:/etc/clickhouse-server/users.xml
@@ -56,6 +59,7 @@ services:
       - clickhouse-net
     depends_on:
       - zookeeper
+    command: /bin/bash -c "chown -R root:root /var/lib/clickhouse && /entrypoint.sh"
 
   clickhouse-shard2-replica1:
     image: clickhouse/clickhouse-server
@@ -63,6 +67,7 @@ services:
     ports:
       - "9003:9000"
       - "8125:8123"
+      - "9011:9009"
     volumes:
       - ./configs/shard2-replica1/config.xml:/etc/clickhouse-server/config.xml
       - ./configs/shard2-replica1/users.xml:/etc/clickhouse-server/users.xml
@@ -72,6 +77,7 @@ services:
       - clickhouse-net
     depends_on:
       - zookeeper
+    command: /bin/bash -c "chown -R root:root /var/lib/clickhouse && /entrypoint.sh"
 
   clickhouse-shard2-replica2:
     image: clickhouse/clickhouse-server
@@ -79,6 +85,7 @@ services:
     ports:
       - "9004:9000"
       - "8126:8123"
+      - "9012:9009"
     volumes:
       - ./configs/shard2-replica2/config.xml:/etc/clickhouse-server/config.xml
       - ./configs/shard2-replica2/users.xml:/etc/clickhouse-server/users.xml
@@ -88,11 +95,11 @@ services:
       - clickhouse-net
     depends_on:
       - zookeeper
+    command: /bin/bash -c "chown -R root:root /var/lib/clickhouse && /entrypoint.sh"
 
 networks:
   clickhouse-net:
     driver: bridge
-
 ```
 
 - 3. docker-compose 命令：
@@ -106,8 +113,12 @@ networks:
 
 ```
 <yandex>
+    <distributed_ddl>
+        <path>/clickhouse/task_queue/ddl</path>
+    </distributed_ddl>
+
     <remote_servers>
-        <cluster>
+        <my_cluster>
             <shard>
                 <replica>
                     <host>clickhouse-shard1-replica1</host>
@@ -128,7 +139,7 @@ networks:
                     <port>9000</port>
                 </replica>
             </shard>
-        </cluster>
+        </my_cluster>
     </remote_servers>
 
     <zookeeper>
@@ -149,6 +160,7 @@ networks:
 
     <!-- HTTP 端口 (用于 HTTP API) -->
     <http_port>8123</http_port>
+    <interserver_http_port>9009</interserver_http_port>
 
     <!-- 数据存储路径 -->
     <path>/var/lib/clickhouse/</path>
@@ -183,6 +195,7 @@ networks:
             </networks>
             <profile>default</profile>
             <quota>default</quota>
+            <access_management>1</access_management>
         </default>
     </users>
 
