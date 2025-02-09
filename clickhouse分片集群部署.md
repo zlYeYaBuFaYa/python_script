@@ -1,6 +1,6 @@
-## clickhouse 分片集群部署
+## docker-clickhouse 分片集群部署
 
-- 1. docker， docker-compose 安装
+- 1. docker， docker-compose 略...
 
 ```
 a. 配置2分片，2副本集群：
@@ -80,7 +80,7 @@ services:
     command: /bin/bash -c "chown -R root:root /var/lib/clickhouse && /entrypoint.sh"
 
   clickhouse-shard2-replica2:
-    image: clickhouse/clickhouse-server
+    image: clic khouse/clickhouse-server
     container_name: clickhouse-shard2-replica2
     ports:
       - "9004:9000"
