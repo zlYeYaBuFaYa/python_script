@@ -18,4 +18,7 @@ docker run -d --name my-mysql -p 3306:3306 --privileged=true --restart=always -v
 
 # mac
 docker run -d --name my-mysql -p 3306:3306 --privileged=true --restart=always -v /Users/zlyybfy/docker/mysql/data:/var/lib/mysql -v /Users/zlyybfy/docker/mysql/conf:/etc/mysql/conf.d -v /Users/zlyybfy/docker/mysql/logs:/var/log/mysql -e MYSQL_ROOT_PASSWORD=123456 mysql
+
+# aliyun
+docker run -d --name my-mysql -p 3306:3306 --privileged=true --restart=always -v /home/docker/mysql/data:/var/lib/mysql -v /home/docker/mysql/conf:/etc/mysql/conf.d -v /home/docker/mysql/logs:/var/log/mysql -e MYSQL_ROOT_PASSWORD=123456 mysql:9.0
 ```
