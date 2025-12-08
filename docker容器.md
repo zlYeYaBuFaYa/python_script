@@ -17,7 +17,7 @@ docker run -d --name my-mongo -p 27017:27017 --privileged=true --restart=always 
 docker run -d --name my-mysql -p 3306:3306 --privileged=true --restart=always -v E:/mysql/data:/var/lib/mysql -v E:/mysql/conf:/etc/mysql/conf.d -v E:/mysql/logs:/var/log/mysql -e MYSQL_ROOT_PASSWORD=123456 mysql
 
 # mac
-docker run -d --name my-mysql -p 3306:3306 --privileged=true --restart=always -v /Users/zlyybfy/docker/mysql/data:/var/lib/mysql -v /Users/zlyybfy/docker/mysql/conf:/etc/mysql/conf.d -v /Users/zlyybfy/docker/mysql/logs:/var/log/mysql -e MYSQL_ROOT_PASSWORD=123456 mysql
+docker run -d --name my-mysql -p 3306:3306 --privileged=true --restart=always -v /Users/zlyybfy/docker/mysql/data:/var/lib/mysql -v /Users/zlyybfy/docker/mysql/conf:/etc/mysql/conf.d -v /Users/zlyybfy/docker/mysql/logs:/var/log/mysql -e MYSQL_ROOT_PASSWORD=123456 mysql:9.0
 
 # aliyun
 docker run -d --name my-mysql -p 3306:3306 --privileged=true --restart=always -v /home/docker/mysql/data:/var/lib/mysql -v /home/docker/mysql/conf:/etc/mysql/conf.d -v /home/docker/mysql/logs:/var/log/mysql -e MYSQL_ROOT_PASSWORD=123456 mysql:9.0
