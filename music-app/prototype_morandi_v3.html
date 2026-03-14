@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>本地音乐播放器 · 产品原型 v3.0 - 莫兰迪配色</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          morandi: {
+            bg: '#F7F4F0',
+            card: '#FFFFFF',
+            primary: '#B8957A',
+            primaryLight: '#D4BCA8',
+            text: '#4A3F35',
+            text2: '#8B7D6B',
+            text3: '#B5A692',
+            border: '#E8DDD2',
+            red: '#C9A08A',
+            green: '#9CB89C',
+            orange: '#D4A574',
+            beige: '#F5EFE7',
+            rose: '#D4B8B0',
+            sage: '#B8C4A8',
+            slate: '#A8B8C4',
+            cream: '#E8DDD2'
+          }
+        },
+        fontFamily: {
+          sans: ['-apple-system', 'PingFang SC', 'Helvetica Neue', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
+<style>
+  body { background: #F0EBE3; }
+  .phone-frame {
+    width: 320px;
+    height: 640px;
+    box-shadow: 0 8px 32px rgba(74,63,53,0.12), 0 0 0 8px #4A3F35, 0 0 0 10px #3A332B;
+  }
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+</head>
+<body class="py-10 px-5">
+
+<div class="text-center mb-10">
+  <h1 class="text-2xl font-bold text-morandi-text mb-2">本地音乐播放器 · 产品原型</h1>
+  <p class="text-sm text-morandi-text2">v3.0 · iOS App · 莫兰迪配色 · Tailwind CSS</p>
+</div>
+
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 一、音乐库                                   -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="mb-12">
+  <h2 class="text-sm font-semibold text-morandi-text2 uppercase tracking-wide mb-4 pl-1">一、音乐库</h2>
+  <div class="flex flex-wrap gap-8">
+
+    <!-- 1-1 全部音乐 -->
+    <div class="flex flex-col items-center">
+      <p class="text-xs font-semibold text-morandi-text2 mb-2">音乐库 · 全部音乐</p>
+      <div class="phone-frame bg-morandi-card rounded-[36px] overflow-hidden flex flex-col">
+        <!-- 状态栏 -->
+        <div class="h-11 flex items-center justify-between px-5 pt-2 text-xs font-semibold">
+          <span>9:41</span>
+          <div class="absolute left-1/2 -translate-x-1/2 top-0 w-20 h-5 bg-morandi-text rounded-b-[12px]"></div>
+          <div class="flex gap-1 items-center text-[10px]">
+            <span>●●●</span>
+            <span>WiFi</span>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM3 4a1 1 0 011-1h12a1 1 0 011 1v2.586l-4 4-4-4-4 4V4z"/></svg>
+          </div>
+        </div>
+        <!-- 导航栏 -->
+        <div class="h-11 flex items-center justify-between px-4 border-b border-morandi-border bg-white/90 backdrop-blur-sm">
+          <span></span>
+          <span class="text-base font-semibold">音乐库</span>
+          <button>
+            <svg class="w-5 h-5 text-morandi-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v10M1 12h6m6 0h10"/></svg>
+          </button>
+        </div>
+        <!-- Tab栏 -->
+        <div class="flex border-b border-morandi-border bg-morandi-card">
+          <div class="flex-1 text-center py-2.5 text-sm text-morandi-primary border-b-2 border-morandi-primary font-semibold">全部</div>
+          <div class="flex-1 text-center py-2.5 text-sm text-morandi-text2">艺术家</div>
+          <div class="flex-1 text-center py-2.5 text-sm text-morandi-text2">专辑</div>
+          <div class="flex-1 text-center py-2.5 text-sm text-morandi-text2">歌单</div>
+        </div>
+        <!-- 搜索框 -->
+        <div class="mx-3 mt-2 mb-2 bg-morandi-beige rounded-xl px-3 py-2 flex items-center gap-1.5 text-sm text-morandi-text3">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <span>搜索歌曲、艺术家、专辑</span>
+        </div>
+        <!-- 工具栏 -->
+        <div class="flex items-center justify-between px-3.5 py-1.5 text-xs text-morandi-text2">
+          <button class="text-morandi-primary flex items-center gap-0.5">排序：文件名 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+          <button class="text-morandi-primary flex items-center gap-0.5">筛选 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></svg></button>
+        </div>
+        <!-- 歌曲列表 -->
+        <div class="flex-1 overflow-hidden relative">
+          <div class="px-3.5 py-2.5 flex items-center gap-2.5 border-b border-morandi-border">
+            <div class="w-10 h-10 bg-gradient-to-br from-morandi-rose to-morandi-primaryLight rounded-lg flex items-center justify-center text-morandi-primary">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="text-sm font-medium text-morandi-primary truncate">夜曲</div>
+              <div class="text-xs text-morandi-text2 mt-0.5 truncate">周杰伦 · 十一月的萧邦 · 3:45</div>
+            </div>
+            <svg class="w-5 h-5 text-morandi-text3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/></svg>
+          </div>
+          <div class="px-3.5 py-2.5 flex items-center gap-2.5 border-b border-morandi-border">
+            <div class="w-10 h-10 bg-gradient-to-br from-morandi-sage to-morandi-green rounded-lg flex items-center justify-center text-morandi-green">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="text-sm font-medium text-morandi-text truncate">晴天</div>
+              <div class="text-xs text-morandi-text2 mt-0.5 truncate">周杰伦 · 叶惠美 · 4:29</div>
+            </div>
+            <svg class="w-5 h-5 text-morandi-text3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/></svg>
+          </div>
+          <div class="px-3.5 py-2.5 flex items-center gap-2.5 border-b border-morandi-border">
+            <div class="w-10 h-10 bg-gradient-to-br from-morandi-orange to-morandi-red rounded-lg flex items-center justify-center text-morandi-orange">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="text-sm font-medium text-morandi-text truncate">七里香</div>
+              <div class="text-xs text-morandi-text2 mt-0.5 truncate">周杰伦 · 七里香 · 4:59</div>
+            </div>
+            <svg class="w-5 h-5 text-morandi-text3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/></svg>
+          </div>
+          <div class="px-3.5 py-2.5 flex items-center gap-2.5 border-b border-morandi-border">
+            <div class="w-10 h-10 bg-gradient-to-br from-morandi-slate to-morandi-sage rounded-lg flex items-center justify-center text-morandi-slate">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="text-sm font-medium text-morandi-text truncate">稻香</div>
+              <div class="text-xs text-morandi-text2 mt-0.5 truncate">周杰伦 · 魔杰座 · 3:42</div>
+            </div>
+            <svg class="w-5 h-5 text-morandi-text3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/></svg>
+          </div>
+          <div class="px-3.5 py-2.5 flex items-center gap-2.5">
+            <div class="w-10 h-10 bg-gradient-to-br from-morandi-cream to-morandi-rose rounded-lg flex items-center justify-center text-morandi-cream">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="text-sm font-medium text-morandi-text truncate">告白气球</div>
+              <div class="text-xs text-morandi-text2 mt-0.5 truncate">周杰伦 · 周杰伦的床边故事 · 3:32</div>
+            </div>
+            <svg class="w-5 h-5 text-morandi-text3" fill="currentColor" viewBox="0 0 20 20"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/></svg>
+          </div>
+          <div class="text-center text-xs text-morandi-text3 py-3">共 128 首</div>
+          <div class="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+        </div>
+        <!-- Mini播放器 -->
+        <div class="bg-morandi-beige/95 backdrop-blur-xl border-t border-morandi-border px-3.5 py-2 flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-morandi-primary to-morandi-red flex items-center justify-center">
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="text-xs font-semibold truncate">夜曲</div>
+            <div class="text-[10px] text-morandi-text2">周杰伦</div>
+          </div>
+          <div class="flex gap-3 items-center">
+            <button class="text-lg">⏸</button>
+            <button class="text-lg">⏭</button>
+          </div>
+        </div>
+        <!-- 底部Tab -->
+        <div class="h-20 bg-white/95 border-t border-morandi-border flex pb-5">
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-primary">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+            <span class="text-[9px]">音乐库</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-text2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            <span class="text-[9px]">歌单</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-text2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+            <span class="text-[9px]">导入</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-text2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v10M1 12h6m6 0h10"/></svg>
+            <span class="text-[9px]">设置</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1-2 艺术家视图 -->
+    <div class="flex flex-col items-center">
+      <p class="text-xs font-semibold text-morandi-text2 mb-2">音乐库 · 艺术家</p>
+      <div class="phone-frame bg-morandi-card rounded-[36px] overflow-hidden flex flex-col">
+        <!-- 状态栏 -->
+        <div class="h-11 flex items-center justify-between px-5 pt-2 text-xs font-semibold">
+          <span>9:41</span>
+          <div class="absolute left-1/2 -translate-x-1/2 top-0 w-20 h-5 bg-morandi-text rounded-b-[12px]"></div>
+          <div class="flex gap-1 items-center text-[10px]">
+            <span>●●●</span>
+            <span>WiFi</span>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM3 4a1 1 0 011-1h12a1 1 0 011 1v2.586l-4 4-4-4-4 4V4z"/></svg>
+          </div>
+        </div>
+        <!-- 导航栏 -->
+        <div class="h-11 flex items-center justify-between px-4 border-b border-morandi-border bg-white/90 backdrop-blur-sm">
+          <span></span>
+          <span class="text-base font-semibold">音乐库</span>
+          <button>
+            <svg class="w-5 h-5 text-morandi-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v10M1 12h6m6 0h10"/></svg>
+          </button>
+        </div>
+        <!-- Tab栏 -->
+        <div class="flex border-b border-morandi-border bg-morandi-card">
+          <div class="flex-1 text-center py-2.5 text-sm text-morandi-text2">全部</div>
+          <div class="flex-1 text-center py-2.5 text-sm text-morandi-primary border-b-2 border-morandi-primary font-semibold">艺术家</div>
+          <div class="flex-1 text-center py-2.5 text-sm text-morandi-text2">专辑</div>
+          <div class="flex-1 text-center py-2.5 text-sm text-morandi-text2">歌单</div>
+        </div>
+        <!-- 搜索框 -->
+        <div class="mx-3 mt-2 bg-morandi-beige rounded-xl px-3 py-2 flex items-center gap-1.5 text-sm text-morandi-text3">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <span>搜索艺术家</span>
+        </div>
+        <!-- 艺术家列表 -->
+        <div class="flex-1 overflow-hidden relative">
+          <div class="px-3.5 py-3 flex items-center gap-3 border-b border-morandi-border">
+            <div class="w-11 h-11 rounded-full bg-gradient-to-br from-morandi-rose to-morandi-orange flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="text-sm font-medium">周杰伦</div>
+              <div class="text-xs text-morandi-text2 mt-1">48首歌曲 · 12张专辑</div>
+            </div>
+            <svg class="w-4 h-4 text-morandi-text3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+          <div class="px-3.5 py-3 flex items-center gap-3 border-b border-morandi-border">
+            <div class="w-11 h-11 rounded-full bg-gradient-to-br from-morandi-sage to-morandi-green flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="text-sm font-medium">陈奕迅</div>
+              <div class="text-xs text-morandi-text2 mt-1">32首歌曲 · 8张专辑</div>
+            </div>
+            <svg class="w-4 h-4 text-morandi-text3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+          <div class="px-3.5 py-3 flex items-center gap-3 border-b border-morandi-border">
+            <div class="w-11 h-11 rounded-full bg-gradient-to-br from-morandi-slate to-morandi-sage flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="text-sm font-medium">孙燕姿</div>
+              <div class="text-xs text-morandi-text2 mt-1">24首歌曲 · 6张专辑</div>
+            </div>
+            <svg class="w-4 h-4 text-morandi-text3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+          <div class="px-3.5 py-3 flex items-center gap-3 border-b border-morandi-border">
+            <div class="w-11 h-11 rounded-full bg-gradient-to-br from-morandi-primaryLight to-morandi-primary flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="text-sm font-medium">林俊杰</div>
+              <div class="text-xs text-morandi-text2 mt-1">18首歌曲 · 5张专辑</div>
+            </div>
+            <svg class="w-4 h-4 text-morandi-text3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+          <div class="px-3.5 py-3 flex items-center gap-3">
+            <div class="w-11 h-11 rounded-full bg-gradient-to-br from-morandi-cream to-morandi-rose flex items-center justify-center">
+              <svg class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="text-sm font-medium">邓紫棋</div>
+              <div class="text-xs text-morandi-text2 mt-1">15首歌曲 · 4张专辑</div>
+            </div>
+            <svg class="w-4 h-4 text-morandi-text3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+          <div class="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+        </div>
+        <!-- Mini播放器 -->
+        <div class="bg-morandi-beige/95 backdrop-blur-xl border-t border-morandi-border px-3.5 py-2 flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-morandi-primary to-morandi-red flex items-center justify-center">
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="text-xs font-semibold truncate">夜曲</div>
+            <div class="text-[10px] text-morandi-text2">周杰伦</div>
+          </div>
+          <div class="flex gap-3 items-center">
+            <button class="text-lg">⏸</button>
+            <button class="text-lg">⏭</button>
+          </div>
+        </div>
+        <!-- 底部Tab -->
+        <div class="h-20 bg-white/95 border-t border-morandi-border flex pb-5">
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-primary">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+            <span class="text-[9px]">音乐库</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-text2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            <span class="text-[9px]">歌单</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-text2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+            <span class="text-[9px]">导入</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-text2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v10M1 12h6m6 0h10"/></svg>
+            <span class="text-[9px]">设置</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1-3 专辑详情 -->
+    <div class="flex flex-col items-center">
+      <p class="text-xs font-semibold text-morandi-text2 mb-2">专辑详情页</p>
+      <div class="phone-frame bg-morandi-card rounded-[36px] overflow-hidden flex flex-col">
+        <!-- 状态栏 -->
+        <div class="h-11 flex items-center justify-between px-5 pt-2 text-xs font-semibold">
+          <span>9:41</span>
+          <div class="absolute left-1/2 -translate-x-1/2 top-0 w-20 h-5 bg-morandi-text rounded-b-[12px]"></div>
+          <div class="flex gap-1 items-center text-[10px]">
+            <span>●●●</span>
+            <span>WiFi</span>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM3 4a1 1 0 011-1h12a1 1 0 011 1v2.586l-4 4-4-4-4 4V4z"/></svg>
+          </div>
+        </div>
+        <!-- 导航栏 -->
+        <div class="h-11 flex items-center justify-between px-4 border-b border-morandi-border bg-white/90 backdrop-blur-sm">
+          <button class="text-morandi-primary flex items-center"><span class="text-lg">‹</span> 专辑</button>
+          <span></span>
+          <button>
+            <svg class="w-5 h-5 text-morandi-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z"/></svg>
+          </button>
+        </div>
+        <!-- 专辑头部 -->
+        <div class="bg-gradient-to-br from-morandi-primaryLight to-morandi-primary px-3.5 py-4 text-white">
+          <div class="w-28 h-28 mx-auto bg-gradient-to-br from-morandi-orange to-morandi-red rounded-xl flex items-center justify-center shadow-lg mb-3">
+            <svg class="w-12 h-12 text-white/90" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+          </div>
+          <div class="text-center">
+            <div class="text-lg font-bold">七里香</div>
+            <div class="text-sm text-white/70 mt-1">周杰伦 · 2004 · 10首歌曲</div>
+          </div>
+        </div>
+        <!-- 操作按钮 -->
+        <div class="flex gap-2 px-3.5 py-3">
+          <button class="flex-1 bg-morandi-primary text-white rounded-xl px-2.5 py-2 text-xs font-semibold flex items-center justify-center gap-1">
+            <span>▶</span> 播放全部
+          </button>
+          <button class="flex-1 bg-white border border-morandi-border rounded-xl px-2.5 py-2 text-xs flex items-center justify-center gap-1">
+            <span>🔀</span> 随机
+          </button>
+          <button class="flex-1 bg-white border border-morandi-border rounded-xl px-2.5 py-2 text-xs flex items-center justify-center">
+            ❤
+          </button>
+        </div>
+        <!-- 歌曲列表 -->
+        <div class="flex-1 overflow-hidden relative">
+          <div class="px-3.5 py-2.5 flex items-center gap-2.5 border-b border-morandi-border">
+            <span class="w-6 text-center text-sm text-morandi-text2">1</span>
+            <div class="flex-1">
+              <div class="text-sm">我的地盘</div>
+              <div class="text-xs text-morandi-text2">4:02</div>
+            </div>
+          </div>
+          <div class="px-3.5 py-2.5 flex items-center gap-2.5 border-b border-morandi-border">
+            <span class="w-6 text-center text-sm font-bold text-morandi-primary">2</span>
+            <div class="flex-1">
+              <div class="text-sm font-medium text-morandi-primary">七里香</div>
+              <div class="text-xs text-morandi-text2">4:59</div>
+            </div>
+          </div>
+          <div class="px-3.5 py-2.5 flex items-center gap-2.5 border-b border-morandi-border">
+            <span class="w-6 text-center text-sm text-morandi-text2">3</span>
+            <div class="flex-1">
+              <div class="text-sm">借口</div>
+              <div class="text-xs text-morandi-text2">3:31</div>
+            </div>
+          </div>
+          <div class="px-3.5 py-2.5 flex items-center gap-2.5 border-b border-morandi-border">
+            <span class="w-6 text-center text-sm text-morandi-text2">4</span>
+            <div class="flex-1">
+              <div class="text-sm">外婆</div>
+              <div class="text-xs text-morandi-text2">3:26</div>
+            </div>
+          </div>
+          <div class="px-3.5 py-2.5 flex items-center gap-2.5">
+            <span class="w-6 text-center text-sm text-morandi-text2">5</span>
+            <div class="flex-1">
+              <div class="text-sm">将军</div>
+              <div class="text-xs text-morandi-text2">4:26</div>
+            </div>
+          </div>
+          <div class="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+        </div>
+        <!-- Mini播放器 -->
+        <div class="bg-morandi-beige/95 backdrop-blur-xl border-t border-morandi-border px-3.5 py-2 flex items-center gap-2.5">
+          <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-morandi-primary to-morandi-red flex items-center justify-center">
+            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="text-xs font-semibold truncate">七里香</div>
+            <div class="text-[10px] text-morandi-text2">周杰伦</div>
+          </div>
+          <div class="flex gap-3 items-center">
+            <button class="text-lg">⏸</button>
+            <button class="text-lg">⏭</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 1-4 批量操作 -->
+    <div class="flex flex-col items-center">
+      <p class="text-xs font-semibold text-morandi-text2 mb-2">批量操作模式</p>
+      <div class="phone-frame bg-morandi-card rounded-[36px] overflow-hidden flex flex-col">
+        <!-- 状态栏 -->
+        <div class="h-11 flex items-center justify-between px-5 pt-2 text-xs font-semibold">
+          <span>9:41</span>
+          <div class="absolute left-1/2 -translate-x-1/2 top-0 w-20 h-5 bg-morandi-text rounded-b-[12px]"></div>
+          <div class="flex gap-1 items-center text-[10px]">
+            <span>●●●</span>
+            <span>WiFi</span>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM3 4a1 1 0 011-1h12a1 1 0 011 1v2.586l-4 4-4-4-4 4V4z"/></svg>
+          </div>
+        </div>
+        <!-- 批量操作栏 -->
+        <div class="bg-morandi-primary text-white px-3.5 py-2.5 flex items-center justify-between">
+          <button class="text-white/90 text-sm">取消</button>
+          <span class="text-sm font-semibold">已选 3 首</span>
+          <span class="w-10"></span>
+        </div>
+        <!-- 批量操作按钮 -->
+        <div class="flex gap-5 px-3.5 py-2 border-b border-morandi-border text-sm">
+          <button class="text-morandi-primary flex items-center gap-1">全选</button>
+          <button class="text-morandi-primary flex items-center gap-1">▶ 播放</button>
+          <button class="text-morandi-primary flex items-center gap-1">＋ 歌单</button>
+          <button class="text-morandi-red flex items-center gap-1">🗑 删除</button>
+        </div>
+        <!-- 歌曲列表 -->
+        <div class="flex-1 overflow-hidden relative">
+          <div class="px-3 py-2.5 flex items-center gap-2 border-b border-morandi-border">
+            <div class="w-5 h-5 rounded-full bg-morandi-primary flex items-center justify-center">
+              <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div class="w-8 h-8 bg-gradient-to-br from-morandi-rose to-morandi-primaryLight rounded flex items-center justify-center">
+              <svg class="w-4 h-4 text-morandi-primary" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="text-sm">夜曲</div>
+              <div class="text-xs text-morandi-text2">周杰伦 · 3:45</div>
+            </div>
+          </div>
+          <div class="px-3 py-2.5 flex items-center gap-2 border-b border-morandi-border">
+            <div class="w-5 h-5 rounded-full bg-morandi-primary flex items-center justify-center">
+              <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div class="w-8 h-8 bg-gradient-to-br from-morandi-sage to-morandi-green rounded flex items-center justify-center">
+              <svg class="w-4 h-4 text-morandi-green" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="text-sm">晴天</div>
+              <div class="text-xs text-morandi-text2">周杰伦 · 4:29</div>
+            </div>
+          </div>
+          <div class="px-3 py-2.5 flex items-center gap-2 border-b border-morandi-border">
+            <div class="w-5 h-5 rounded-full border-2 border-morandi-border"></div>
+            <div class="w-8 h-8 bg-gradient-to-br from-morandi-orange to-morandi-red rounded flex items-center justify-center">
+              <svg class="w-4 h-4 text-morandi-orange" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="text-sm">稻香</div>
+              <div class="text-xs text-morandi-text2">周杰伦 · 3:42</div>
+            </div>
+          </div>
+          <div class="px-3 py-2.5 flex items-center gap-2 border-b border-morandi-border">
+            <div class="w-5 h-5 rounded-full bg-morandi-primary flex items-center justify-center">
+              <svg class="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>
+            </div>
+            <div class="w-8 h-8 bg-gradient-to-br from-morandi-slate to-morandi-sage rounded flex items-center justify-center">
+              <svg class="w-4 h-4 text-morandi-slate" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="text-sm">七里香</div>
+              <div class="text-xs text-morandi-text2">周杰伦 · 4:59</div>
+            </div>
+          </div>
+          <div class="px-3 py-2.5 flex items-center gap-2">
+            <div class="w-5 h-5 rounded-full border-2 border-morandi-border"></div>
+            <div class="w-8 h-8 bg-gradient-to-br from-morandi-cream to-morandi-rose rounded flex items-center justify-center">
+              <svg class="w-4 h-4 text-morandi-cream" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+            </div>
+            <div class="flex-1">
+              <div class="text-sm">告白气球</div>
+              <div class="text-xs text-morandi-text2">周杰伦 · 3:32</div>
+            </div>
+          </div>
+          <div class="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 二、播放器                                   -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="mb-12">
+  <h2 class="text-sm font-semibold text-morandi-text2 uppercase tracking-wide mb-4 pl-1">二、播放器</h2>
+  <div class="flex flex-wrap gap-8">
+
+    <!-- 2-1 全屏播放器 -->
+    <div class="flex flex-col items-center">
+      <p class="text-xs font-semibold text-morandi-text2 mb-2">全屏播放器</p>
+      <div class="phone-frame rounded-[36px] overflow-hidden flex flex-col" style="background: linear-gradient(160deg, #8B7355 0%, #6B5345 50%, #4B3729 100%);">
+        <!-- 状态栏 -->
+        <div class="h-11 flex items-center justify-between px-5 pt-2 text-xs font-semibold text-white/80">
+          <span>9:41</span>
+          <div class="absolute left-1/2 -translate-x-1/2 top-0 w-20 h-5 bg-morandi-text rounded-b-[12px]"></div>
+          <div class="flex gap-1 items-center text-[10px]">
+            <span>●●●</span>
+            <span>WiFi</span>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM3 4a1 1 0 011-1h12a1 1 0 011 1v2.586l-4 4-4-4-4 4V4z"/></svg>
+          </div>
+        </div>
+        <!-- 播放器内容 -->
+        <div class="flex-1 flex flex-col px-5 pb-5 text-white">
+          <!-- 下滑指示器 -->
+          <div class="w-9 h-1 bg-white/30 rounded-full mx-auto mb-4"></div>
+          <!-- 头部 -->
+          <div class="flex justify-between items-center mb-4">
+            <button class="text-white/80 text-xl">˅</button>
+            <div class="text-center">
+              <div class="text-[10px] font-semibold text-white/50 tracking-wider">正在播放</div>
+              <div class="text-xs font-semibold text-white/90">七里香歌单</div>
+            </div>
+            <button class="text-white/80 text-xl">···</button>
+          </div>
+          <!-- 专辑封面 -->
+          <div class="w-48 h-48 mx-auto bg-gradient-to-br from-morandi-orange to-morandi-red rounded-2xl flex items-center justify-center shadow-2xl mb-5">
+            <svg class="w-16 h-16 text-white/90" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+          </div>
+          <!-- 歌曲信息 -->
+          <div class="text-center mb-4">
+            <div class="text-xl font-bold">夜曲</div>
+            <div class="text-sm text-white/70 mt-1">周杰伦 · 十一月的萧邦</div>
+          </div>
+          <!-- 操作按钮 -->
+          <div class="flex justify-around mb-4">
+            <button class="text-white/80 text-xl">❤</button>
+            <button class="text-white/80 text-xl">🔀</button>
+            <button class="text-white/80 text-xl">⏱</button>
+            <button class="text-white/80 text-xl">🎵</button>
+          </div>
+          <!-- 进度条 -->
+          <div class="mb-5">
+            <div class="relative h-1 bg-white/20 rounded-full mb-1.5">
+              <div class="absolute left-0 top-0 h-full w-[38%] bg-white rounded-full"></div>
+              <div class="absolute right-[-6px] top-[-4px] w-3 h-3 bg-white rounded-full shadow"></div>
+            </div>
+            <div class="flex justify-between text-[10px] text-white/50">
+              <span>1:25</span>
+              <span>3:45</span>
+            </div>
+          </div>
+          <!-- 播放控制 -->
+          <div class="flex items-center justify-around mb-4">
+            <button class="text-2xl text-white">⏮</button>
+            <button class="text-xl text-white/70">-10s</button>
+            <button class="text-5xl">⏸</button>
+            <button class="text-xl text-white/70">+10s</button>
+            <button class="text-2xl text-white">⏭</button>
+          </div>
+          <!-- 底部按钮 -->
+          <div class="flex justify-between items-center">
+            <button class="text-white/70 text-sm">🔁</button>
+            <button class="text-white/70 text-sm">1.0x</button>
+            <button class="text-white/70 text-sm">📋</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2-2 歌词页 -->
+    <div class="flex flex-col items-center">
+      <p class="text-xs font-semibold text-morandi-text2 mb-2">歌词显示</p>
+      <div class="phone-frame rounded-[36px] overflow-hidden flex flex-col" style="background: linear-gradient(160deg, #5B4535 0%, #6B5040 100%);">
+        <!-- 状态栏 -->
+        <div class="h-11 flex items-center justify-between px-5 pt-2 text-xs font-semibold text-white/80">
+          <span>9:41</span>
+          <div class="absolute left-1/2 -translate-x-1/2 top-0 w-20 h-5 bg-morandi-text rounded-b-[12px]"></div>
+          <div class="flex gap-1 items-center text-[10px]">
+            <span>●●●</span>
+            <span>WiFi</span>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM3 4a1 1 0 011-1h12a1 1 0 011 1v2.586l-4 4-4-4-4 4V4z"/></svg>
+          </div>
+        </div>
+        <!-- 歌词内容 -->
+        <div class="flex-1 flex flex-col text-white">
+          <!-- 导航 -->
+          <div class="flex justify-between items-center px-4 py-3">
+            <button class="text-white/70 text-xl">˅</button>
+            <div class="text-center">
+              <div class="text-sm font-semibold">夜曲</div>
+              <div class="text-xs text-white/60 mt-0.5">周杰伦</div>
+            </div>
+            <button class="text-white/70 text-sm">Aa</button>
+          </div>
+          <!-- 歌词列表 -->
+          <div class="flex-1 px-5 py-2 overflow-hidden">
+            <div class="text-sm text-white/40 text-center py-2">为你弹奏肖邦的夜曲</div>
+            <div class="text-sm text-white/70 text-center py-2">纪念我死去的爱情</div>
+            <div class="text-base font-semibold text-white text-center py-2">我用我的琴声哭泣</div>
+            <div class="text-sm text-white/70 text-center py-2">他不懂我的深情</div>
+            <div class="text-sm text-white/40 text-center py-2">你以为爱情不渝</div>
+            <div class="text-sm text-white/40 text-center py-2">像夜曲在空气里</div>
+            <div class="text-sm text-white/40 text-center py-2">你以为我每次呼吸</div>
+            <div class="text-sm text-white/40 text-center py-2">都是为了你而活</div>
+          </div>
+          <!-- 控制栏 -->
+          <div class="px-5 py-3 border-t border-white/10">
+            <div class="text-white/50 text-center text-xs mb-2.5">1:25 / 3:45</div>
+            <div class="flex justify-around">
+              <button class="text-white/70 text-2xl">⏮</button>
+              <button class="text-white text-4xl">⏸</button>
+              <button class="text-white/70 text-2xl">⏭</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 三、歌单 & 导入                              -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="mb-12">
+  <h2 class="text-sm font-semibold text-morandi-text2 uppercase tracking-wide mb-4 pl-1">三、歌单 & 导入</h2>
+  <div class="flex flex-wrap gap-8">
+
+    <!-- 3-1 歌单列表 -->
+    <div class="flex flex-col items-center">
+      <p class="text-xs font-semibold text-morandi-text2 mb-2">歌单列表</p>
+      <div class="phone-frame bg-morandi-card rounded-[36px] overflow-hidden flex flex-col">
+        <!-- 状态栏 -->
+        <div class="h-11 flex items-center justify-between px-5 pt-2 text-xs font-semibold">
+          <span>9:41</span>
+          <div class="absolute left-1/2 -translate-x-1/2 top-0 w-20 h-5 bg-morandi-text rounded-b-[12px]"></div>
+          <div class="flex gap-1 items-center text-[10px]">
+            <span>●●●</span>
+            <span>WiFi</span>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM3 4a1 1 0 011-1h12a1 1 0 011 1v2.586l-4 4-4-4-4 4V4z"/></svg>
+          </div>
+        </div>
+        <!-- 导航栏 -->
+        <div class="h-11 flex items-center justify-between px-4 border-b border-morandi-border bg-white/90 backdrop-blur-sm">
+          <span></span>
+          <span class="text-base font-semibold">歌单</span>
+          <button class="text-morandi-primary text-lg">＋</button>
+        </div>
+        <!-- 歌单内容 -->
+        <div class="flex-1 overflow-hidden relative">
+          <!-- 系统歌单 -->
+          <div class="px-3 py-2 text-xs font-semibold text-morandi-text2 bg-morandi-bg">系统歌单</div>
+          <div class="px-3.5 py-3 flex items-center gap-3 border-b border-morandi-border">
+            <div class="w-11 h-11 rounded-lg bg-gradient-to-br from-morandi-red to-morandi-orange flex items-center justify-center">
+              <span class="text-lg">❤</span>
+            </div>
+            <div class="flex-1">
+              <div class="text-sm font-semibold">我喜欢</div>
+              <div class="text-xs text-morandi-text2 mt-1">38 首歌曲</div>
+            </div>
+            <svg class="w-4 h-4 text-morandi-text3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+          <div class="px-3.5 py-3 flex items-center gap-3 border-b border-morandi-border">
+            <div class="w-11 h-11 rounded-lg bg-gradient-to-br from-morandi-slate to-morandi-green flex items-center justify-center">
+              <span class="text-lg">🕐</span>
+            </div>
+            <div class="flex-1">
+              <div class="text-sm font-semibold">最近播放</div>
+              <div class="text-xs text-morandi-text2 mt-1">最近 7 天 · 52 首</div>
+            </div>
+            <svg class="w-4 h-4 text-morandi-text3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+          <!-- 用户歌单 -->
+          <div class="px-3 py-2 text-xs font-semibold text-morandi-text2 bg-morandi-bg mt-2">我的歌单</div>
+          <div class="grid grid-cols-2 gap-3 px-3 pb-3">
+            <div class="bg-morandi-bg rounded-xl overflow-hidden">
+              <div class="aspect-square grid grid-cols-2">
+                <div class="bg-gradient-to-br from-morandi-rose to-morandi-primaryLight flex items-center justify-center">
+                  <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+                </div>
+                <div class="bg-gradient-to-br from-morandi-sage to-morandi-green flex items-center justify-center">
+                  <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+                </div>
+                <div class="bg-gradient-to-br from-morandi-orange to-morandi-sage flex items-center justify-center">
+                  <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+                </div>
+                <div class="bg-gradient-to-br from-morandi-slate to-morandi-cream flex items-center justify-center">
+                  <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+                </div>
+              </div>
+              <div class="px-2 py-2">
+                <div class="text-xs font-semibold">通勤必听</div>
+                <div class="text-[10px] text-morandi-text2 mt-0.5">24 首</div>
+              </div>
+            </div>
+            <div class="bg-morandi-bg rounded-xl overflow-hidden">
+              <div class="aspect-square grid grid-cols-2">
+                <div class="bg-gradient-to-br from-morandi-orange to-morandi-red flex items-center justify-center">
+                  <span class="text-2xl">🏃</span>
+                </div>
+                <div class="bg-gradient-to-br from-morandi-sage to-morandi-green flex items-center justify-center">
+                  <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+                </div>
+                <div class="bg-gradient-to-br from-morandi-primaryLight to-morandi-orange flex items-center justify-center">
+                  <span class="text-2xl">💪</span>
+                </div>
+                <div class="bg-gradient-to-br from-morandi-rose to-morandi-slate flex items-center justify-center">
+                  <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+                </div>
+              </div>
+              <div class="px-2 py-2">
+                <div class="text-xs font-semibold">运动节拍</div>
+                <div class="text-[10px] text-morandi-text2 mt-0.5">18 首</div>
+              </div>
+            </div>
+            <div class="bg-morandi-bg rounded-xl overflow-hidden">
+              <div class="aspect-square bg-gradient-to-br from-morandi-sage to-morandi-slate flex items-center justify-center">
+                <span class="text-3xl">🌙</span>
+              </div>
+              <div class="px-2 py-2">
+                <div class="text-xs font-semibold">睡前轻音乐</div>
+                <div class="text-[10px] text-morandi-text2 mt-0.5">12 首</div>
+              </div>
+            </div>
+            <div class="bg-morandi-bg rounded-xl overflow-hidden">
+              <div class="aspect-square bg-gradient-to-br from-morandi-orange to-morandi-primary flex items-center justify-center">
+                <span class="text-3xl">☕</span>
+              </div>
+              <div class="px-2 py-2">
+                <div class="text-xs font-semibold">咖啡时光</div>
+                <div class="text-[10px] text-morandi-text2 mt-0.5">9 首</div>
+              </div>
+            </div>
+          </div>
+          <div class="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
+        </div>
+        <!-- 底部Tab -->
+        <div class="h-20 bg-white/95 border-t border-morandi-border flex pb-5">
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-text2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+            <span class="text-[9px]">音乐库</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-primary">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            <span class="text-[9px]">歌单</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-text2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+            <span class="text-[9px]">导入</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-text2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v10M1 12h6m6 0h10"/></svg>
+            <span class="text-[9px]">设置</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3-2 WiFi传输 -->
+    <div class="flex flex-col items-center">
+      <p class="text-xs font-semibold text-morandi-text2 mb-2">WiFi 传输</p>
+      <div class="phone-frame bg-morandi-card rounded-[36px] overflow-hidden flex flex-col">
+        <!-- 状态栏 -->
+        <div class="h-11 flex items-center justify-between px-5 pt-2 text-xs font-semibold">
+          <span>9:41</span>
+          <div class="absolute left-1/2 -translate-x-1/2 top-0 w-20 h-5 bg-morandi-text rounded-b-[12px]"></div>
+          <div class="flex gap-1 items-center text-[10px]">
+            <span>●●●</span>
+            <span>WiFi</span>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM3 4a1 1 0 011-1h12a1 1 0 011 1v2.586l-4 4-4-4-4 4V4z"/></svg>
+          </div>
+        </div>
+        <!-- 导航栏 -->
+        <div class="h-11 flex items-center justify-between px-4 border-b border-morandi-border bg-white/90 backdrop-blur-sm">
+          <button class="text-morandi-primary flex items-center"><span class="text-lg">‹</span> 导入</button>
+          <span class="text-base font-semibold">WiFi 传输</span>
+          <span></span>
+        </div>
+        <!-- 内容 -->
+        <div class="flex-1 overflow-hidden relative">
+          <!-- 警告提示 -->
+          <div class="mx-3 mt-2 bg-amber-50 border border-amber-200 rounded-xl px-3 py-2.5 flex gap-1.5 items-start text-xs text-amber-800">
+            <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+            <div><strong>安全提示</strong>：仅在可信 WiFi 网络中使用</div>
+          </div>
+          <!-- 二维码占位 -->
+          <div class="w-20 h-20 mx-auto mt-4 mb-3 bg-morandi-bg rounded-xl flex items-center justify-center">
+            <svg class="w-10 h-10 text-morandi-text3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/></svg>
+          </div>
+          <!-- 地址卡片 -->
+          <div class="mx-3 mb-2 bg-morandi-bg rounded-xl px-3.5 py-3.5">
+            <div class="text-sm font-semibold text-morandi-primary mb-2">http://192.168.1.100:8080</div>
+            <div class="text-xs text-morandi-text2 mb-2.5">在电脑浏览器中打开以上地址，或扫描二维码</div>
+            <div class="flex justify-between items-center">
+              <span class="text-sm font-semibold">访问密码</span>
+              <div class="flex gap-1">
+                <div class="w-6 h-7 border border-morandi-border rounded-md flex items-center justify-center text-sm font-bold">8</div>
+                <div class="w-6 h-7 border border-morandi-border rounded-md flex items-center justify-center text-sm font-bold">5</div>
+                <div class="w-6 h-7 border border-morandi-border rounded-md flex items-center justify-center text-sm font-bold">2</div>
+                <div class="w-6 h-7 border border-morandi-border rounded-md flex items-center justify-center text-sm font-bold">7</div>
+                <div class="w-6 h-7 border border-morandi-border rounded-md flex items-center justify-center text-sm font-bold">3</div>
+                <div class="w-6 h-7 border border-morandi-border rounded-md flex items-center justify-center text-sm font-bold">9</div>
+              </div>
+            </div>
+          </div>
+          <!-- 状态 -->
+          <div class="mx-3 mb-2 flex items-center gap-2 text-sm">
+            <div class="w-2 h-2 rounded-full bg-morandi-text3"></div>
+            <span class="text-morandi-text2">等待连接中…</span>
+          </div>
+          <!-- 开关设置 -->
+          <div class="mx-3 bg-morandi-bg rounded-xl px-3 py-2.5 flex justify-between items-center text-sm">
+            <span>开启访问密码</span>
+            <div class="w-11 h-6 bg-morandi-green rounded-full relative">
+              <div class="absolute right-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow"></div>
+            </div>
+          </div>
+          <!-- 停止按钮 -->
+          <div class="mx-3 mt-3 mb-2">
+            <button class="w-full py-3 bg-morandi-red text-white rounded-xl text-sm font-semibold">停止 WiFi 传输</button>
+          </div>
+        </div>
+        <!-- 底部Tab -->
+        <div class="h-20 bg-white/95 border-t border-morandi-border flex pb-5">
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-text2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+            <span class="text-[9px]">音乐库</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-text2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            <span class="text-[9px]">歌单</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-primary">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+            <span class="text-[9px]">导入</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-text2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v10M1 12h6m6 0h10"/></svg>
+            <span class="text-[9px]">设置</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3-3 空状态 -->
+    <div class="flex flex-col items-center">
+      <p class="text-xs font-semibold text-morandi-text2 mb-2">首次使用空状态</p>
+      <div class="phone-frame bg-morandi-card rounded-[36px] overflow-hidden flex flex-col">
+        <!-- 状态栏 -->
+        <div class="h-11 flex items-center justify-between px-5 pt-2 text-xs font-semibold">
+          <span>9:41</span>
+          <div class="absolute left-1/2 -translate-x-1/2 top-0 w-20 h-5 bg-morandi-text rounded-b-[12px]"></div>
+          <div class="flex gap-1 items-center text-[10px]">
+            <span>●●●</span>
+            <span>WiFi</span>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM3 4a1 1 0 011-1h12a1 1 0 011 1v2.586l-4 4-4-4-4 4V4z"/></svg>
+          </div>
+        </div>
+        <!-- 导航栏 -->
+        <div class="h-11 flex items-center justify-between px-4 border-b border-morandi-border bg-white/90 backdrop-blur-sm">
+          <span></span>
+          <span class="text-base font-semibold">音乐库</span>
+          <button>
+            <svg class="w-5 h-5 text-morandi-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v10M1 12h6m6 0h10"/></svg>
+          </button>
+        </div>
+        <!-- Tab栏 -->
+        <div class="flex border-b border-morandi-border bg-morandi-card">
+          <div class="flex-1 text-center py-2.5 text-sm text-morandi-primary border-b-2 border-morandi-primary font-semibold">全部</div>
+          <div class="flex-1 text-center py-2.5 text-sm text-morandi-text2">艺术家</div>
+          <div class="flex-1 text-center py-2.5 text-sm text-morandi-text2">专辑</div>
+          <div class="flex-1 text-center py-2.5 text-sm text-morandi-text2">歌单</div>
+        </div>
+        <!-- 空状态 -->
+        <div class="flex-1 flex flex-col items-center justify-center gap-3 px-5 text-morandi-text2">
+          <svg class="w-12 h-12 text-morandi-text2/50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"/></svg>
+          <h3 class="text-base font-semibold text-morandi-text">还没有音乐文件</h3>
+          <p class="text-sm text-center leading-relaxed">从文件应用导入本地音乐，<br>或通过 WiFi 从电脑传输</p>
+          <div class="flex gap-2.5 mt-1">
+            <button class="px-4 py-2.5 bg-morandi-primary text-white rounded-xl text-sm font-semibold">从文件导入</button>
+            <button class="px-4 py-2.5 border-2 border-morandi-primary text-morandi-primary rounded-xl text-sm font-semibold">WiFi 传输</button>
+          </div>
+        </div>
+        <!-- 底部Tab -->
+        <div class="h-20 bg-white/95 border-t border-morandi-border flex pb-5">
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-primary">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+            <span class="text-[9px]">音乐库</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-text2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            <span class="text-[9px]">歌单</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-text2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+            <span class="text-[9px]">导入</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-text2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v10M1 12h6m6 0h10"/></svg>
+            <span class="text-[9px]">设置</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- 四、设置                                     -->
+<!-- ═══════════════════════════════════════════ -->
+<div class="mb-12">
+  <h2 class="text-sm font-semibold text-morandi-text2 uppercase tracking-wide mb-4 pl-1">四、设置</h2>
+  <div class="flex flex-wrap gap-8">
+
+    <!-- 4-1 设置页 -->
+    <div class="flex flex-col items-center">
+      <p class="text-xs font-semibold text-morandi-text2 mb-2">设置页</p>
+      <div class="phone-frame bg-morandi-bg rounded-[36px] overflow-hidden flex flex-col">
+        <!-- 状态栏 -->
+        <div class="h-11 flex items-center justify-between px-5 pt-2 text-xs font-semibold">
+          <span>9:41</span>
+          <div class="absolute left-1/2 -translate-x-1/2 top-0 w-20 h-5 bg-morandi-text rounded-b-[12px]"></div>
+          <div class="flex gap-1 items-center text-[10px]">
+            <span>●●●</span>
+            <span>WiFi</span>
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path d="M8 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM15 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM3 4a1 1 0 011-1h12a1 1 0 011 1v2.586l-4 4-4-4-4 4V4z"/></svg>
+          </div>
+        </div>
+        <!-- 导航栏 -->
+        <div class="h-11 flex items-center justify-between px-4 border-b border-morandi-border bg-morandi-bg">
+          <span></span>
+          <span class="text-base font-semibold">设置</span>
+          <span></span>
+        </div>
+        <!-- 设置列表 -->
+        <div class="flex-1 overflow-hidden relative">
+          <!-- 外观 -->
+          <div class="mx-3 mt-2 bg-white rounded-xl overflow-hidden">
+            <div class="flex items-center px-3.5 py-3 border-b border-morandi-border">
+              <div class="w-7 h-7 bg-morandi-text2 rounded-md flex items-center justify-center mr-3">
+                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/></svg>
+              </div>
+              <span class="flex-1 text-sm">主题外观</span>
+              <span class="text-morandi-text2 text-xs">跟随系统 ›</span>
+            </div>
+          </div>
+          <!-- 播放设置 -->
+          <div class="px-3 py-2 text-xs font-semibold text-morandi-text2">播放设置</div>
+          <div class="mx-3 bg-white rounded-xl overflow-hidden">
+            <div class="flex items-center px-3.5 py-3 border-b border-morandi-border">
+              <div class="w-7 h-7 bg-morandi-slate rounded-md flex items-center justify-center mr-3">
+                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M4 2a1 1 0 011 1v2.101a7.002 7.002 0 0111.601 2.566 1 1 0 11-1.885.666A5.002 5.002 0 005.999 7H9a1 1 0 010 2H4a1 1 0 01-1-1V3a1 1 0 011-1zm.008 9.057a1 1 0 011.276.61A5.002 5.002 0 0014.001 13H11a1 1 0 110-2h5a1 1 0 011 1v5a1 1 0 11-2 0v-2.101a7.002 7.002 0 01-11.601-2.566 1 1 0 01.61-1.276z"/></svg>
+              </div>
+              <span class="flex-1 text-sm">播放模式</span>
+              <span class="text-morandi-text2 text-xs">顺序播放 ›</span>
+            </div>
+            <div class="flex items-center px-3.5 py-3 border-b border-morandi-border">
+              <div class="w-7 h-7 bg-morandi-orange rounded-md flex items-center justify-center mr-3">
+                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"/></svg>
+              </div>
+              <span class="flex-1 text-sm">播放速度</span>
+              <span class="text-morandi-text2 text-xs">1.0x ›</span>
+            </div>
+            <div class="flex items-center px-3.5 py-3 border-b border-morandi-border">
+              <div class="w-7 h-7 bg-morandi-rose rounded-md flex items-center justify-center mr-3">
+                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd"/></svg>
+              </div>
+              <span class="flex-1 text-sm">定时停止</span>
+              <span class="text-morandi-text2 text-xs">未开启 ›</span>
+            </div>
+            <div class="flex items-center px-3.5 py-3">
+              <div class="w-7 h-7 bg-morandi-green rounded-md flex items-center justify-center mr-3">
+                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 4v12a1 1 0 01-1.707.707L4.586 11H2a1 1 0 01-1-1V8a1 1 0 011-1h2.586l3.707-3.707a1 1 0 011.09-.217zM14.657 2.929a1 1 0 011.414 0A9.972 9.972 0 0119 10a9.972 9.972 0 01-2.929 7.071 1 1 0 01-1.414-1.414A7.971 7.971 0 0017 10c0-2.21-.894-4.208-2.343-5.657a1 1 0 010-1.414zm-2.829 2.828a1 1 0 011.415 0A5.983 5.983 0 0115 10a5.984 5.984 0 01-1.757 4.243 1 1 0 01-1.415-1.415A3.984 3.984 0 0013 10a3.983 3.983 0 00-1.172-2.828 1 1 0 010-1.415z" clip-rule="evenodd"/></svg>
+              </div>
+              <span class="flex-1 text-sm">后台播放</span>
+              <div class="w-11 h-6 bg-morandi-green rounded-full relative">
+                <div class="absolute right-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow"></div>
+              </div>
+            </div>
+          </div>
+          <!-- 导入设置 -->
+          <div class="px-3 py-2 text-xs font-semibold text-morandi-text2">导入设置</div>
+          <div class="mx-3 bg-white rounded-xl overflow-hidden mb-2">
+            <div class="flex items-center px-3.5 py-3 border-b border-morandi-border">
+              <div class="w-7 h-7 bg-morandi-slate rounded-md flex items-center justify-center mr-3">
+                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" clip-rule="evenodd"/><path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/></svg>
+              </div>
+              <span class="flex-1 text-sm">WiFi 传输</span>
+              <span class="text-morandi-text2 text-xs">›</span>
+            </div>
+            <div class="flex items-center px-3.5 py-3">
+              <div class="w-7 h-7 bg-morandi-orange rounded-md flex items-center justify-center mr-3">
+                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"/></svg>
+              </div>
+              <span class="flex-1 text-sm">文件管理</span>
+              <span class="text-morandi-text2 text-xs">›</span>
+            </div>
+          </div>
+          <!-- 关于 -->
+          <div class="mx-3 bg-white rounded-xl overflow-hidden">
+            <div class="flex items-center px-3.5 py-3 border-b border-morandi-border">
+              <div class="w-7 h-7 bg-morandi-text2 rounded-md flex items-center justify-center mr-3">
+                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+              </div>
+              <span class="flex-1 text-sm">关于应用</span>
+              <span class="text-morandi-text2 text-xs">v1.0.0 ›</span>
+            </div>
+            <div class="flex items-center px-3.5 py-3">
+              <div class="w-7 h-7 bg-morandi-text2 rounded-md flex items-center justify-center mr-3">
+                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"/></svg>
+              </div>
+              <span class="flex-1 text-sm">帮助说明</span>
+              <span class="text-morandi-text2 text-xs">›</span>
+            </div>
+          </div>
+          <div class="absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t from-morandi-bg to-transparent pointer-events-none"></div>
+        </div>
+        <!-- 底部Tab -->
+        <div class="h-20 bg-white/95 border-t border-morandi-border flex pb-5">
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-text2">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path d="M18 3a1 1 0 00-1.196-.98l-10 2A1 1 0 006 5v9.114A4.369 4.369 0 005 14c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V7.82l8-1.6v5.894A4.37 4.37 0 0015 12c-1.657 0-3 .895-3 2s1.343 2 3 2 3-.895 3-2V3z"/></svg>
+            <span class="text-[9px]">音乐库</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-text2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            <span class="text-[9px]">歌单</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-text2">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+            <span class="text-[9px]">导入</span>
+          </div>
+          <div class="flex-1 flex flex-col items-center justify-center gap-0.5 text-morandi-primary">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 1v6m0 6v10M1 12h6m6 0h10"/></svg>
+            <span class="text-[9px]">设置</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<div class="text-center mt-14 pb-10 text-morandi-text2 text-sm">
+  本地音乐播放器 · 产品原型 v3.0（莫兰迪配色风格） · 使用 Tailwind CSS 构建
+</div>
+
+</body>
+</html>
